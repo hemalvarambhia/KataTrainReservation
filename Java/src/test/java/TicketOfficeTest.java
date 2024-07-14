@@ -3,11 +3,6 @@ import org.junit.*;
 public class TicketOfficeTest {
 
     @Test
-    public void testFailingHookup() {
-        Assert.assertEquals(4, 2 + 2);
-    }
-
-    @Test
     @Ignore("TODO")
     public void testReservingNoSeats() {}
 
