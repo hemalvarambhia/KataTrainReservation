@@ -1,7 +1,5 @@
 import org.junit.*;
 
-import java.util.ArrayList;
-
 public class TicketOfficeTest {
     private TicketOffice ticketOffice;
 
@@ -42,7 +40,7 @@ public class TicketOfficeTest {
         Reservation actual = ticketOffice.makeReservation(singleSeat);
 
         Assert.assertEquals("train-LDN-LIV", actual.trainId);
-        Assert.assertArrayEquals(new String[] {"A1"}, actual.seatNumbers());
+        Assert.assertArrayEquals(new String[] {"A1"}, actual.seatsReserved());
     }
 
     private void assertNoReservationMade(Reservation reservation) {
