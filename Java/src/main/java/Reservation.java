@@ -11,4 +11,8 @@ public class Reservation {
         this.seats = seats;
     }
 
+    public boolean nothingBooked() {
+        return bookingId.isEmpty() && seats.isEmpty();
+    }
+
 }

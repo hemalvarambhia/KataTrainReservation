@@ -24,7 +24,6 @@ public class TicketOfficeTest {
     public void testReservingASeatOnTrainWithCoachThatIsEmpty() {}
 
     private void assertNoReservationMade(Reservation reservation) {
-        Assert.assertTrue(reservation.seats.isEmpty());
-        Assert.assertTrue(reservation.bookingId.isEmpty());
+        Assert.assertTrue(reservation.nothingBooked());
     }
 }
