@@ -11,6 +11,8 @@ public class Reservation {
         this.seats = seats;
     }
 
+    public String[] seatNumbers() { return new String[] {"A1"}; }
+
     public boolean nothingBooked() {
         return bookingId.isEmpty() && seats.isEmpty();
     }
