@@ -5,10 +5,14 @@ import java.util.ArrayList;
 public class TicketOfficeTest {
     private TicketOffice ticketOffice;
 
+    @Before
+    public void openTicketOffice() {
+        ticketOffice = new TicketOffice();
+    }
+
 
     @Test
     public void testReservingNoSeats() {
-        ticketOffice = new TicketOffice();
         ReservationRequest request = new ReservationRequest("train-LDN-OXF", 0);
 
         Reservation actual = ticketOffice.makeReservation(request);
@@ -19,7 +23,6 @@ public class TicketOfficeTest {
 
     @Test
     public void testReservingNoSeatsOnAnyTrain() {
-        ticketOffice = new TicketOffice();
         ReservationRequest singleSeat = new ReservationRequest("train-LDN-EDB", 0);
 
         Reservation actual = ticketOffice.makeReservation(singleSeat);
@@ -34,7 +37,6 @@ public class TicketOfficeTest {
 
     @Test
     public void testReservingASeatOnTrainWithOneCoachThatIsEmpty() {
-        ticketOffice = new TicketOffice();
         ReservationRequest singleSeat = new ReservationRequest("train-LDN-LIV", 1);
 
         Reservation actual = ticketOffice.makeReservation(singleSeat);
