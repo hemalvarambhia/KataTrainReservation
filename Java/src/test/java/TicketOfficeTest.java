@@ -11,8 +11,7 @@ public class TicketOfficeTest {
 
         Reservation actual = ticketOffice.makeReservation(request);
 
-        Reservation expected = new Reservation("train-LDN-OXF", new ArrayList<Seat>(), "");
-        Assert.assertEquals(expected.trainId, actual.trainId);
+        Assert.assertEquals("train-LDN-OXF", actual.trainId);
         Assert.assertTrue(actual.seats.isEmpty());
         Assert.assertTrue(actual.bookingId.isEmpty());
     }
