@@ -42,7 +42,7 @@ public class TicketOfficeTest {
         Reservation actual = ticketOffice.makeReservation(singleSeat);
 
         Assert.assertEquals("train-LDN-LIV", actual.trainId);
-        Assert.assertEquals(1, actual.seatNumbers().length);
+        Assert.assertArrayEquals(new String[] {"A1"}, actual.seatNumbers());
     }
 
     private void assertNoReservationMade(Reservation reservation) {
