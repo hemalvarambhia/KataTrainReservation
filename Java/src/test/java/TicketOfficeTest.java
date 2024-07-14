@@ -16,6 +16,17 @@ public class TicketOfficeTest {
     }
 
     @Test
+    public void testReservingNoSeatsOnAnyTrain() {
+        TicketOffice ticketOffice = new TicketOffice();
+        ReservationRequest singleSeat = new ReservationRequest("train-LDN-EDB", 0);
+
+        Reservation actual = ticketOffice.makeReservation(singleSeat);
+
+        Assert.assertEquals("train-LDN-EDB", actual.trainId);
+        assertNoReservationMade(actual);
+    }
+
+    @Test
     @Ignore("TODO")
     public void testReservingASeatOnTrainWithNoCoaches() {}
 
