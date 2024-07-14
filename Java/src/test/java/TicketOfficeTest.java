@@ -12,8 +12,7 @@ public class TicketOfficeTest {
         Reservation actual = ticketOffice.makeReservation(request);
 
         Assert.assertEquals("train-LDN-OXF", actual.trainId);
-        Assert.assertTrue(actual.seats.isEmpty());
-        Assert.assertTrue(actual.bookingId.isEmpty());
+        assertNoReservationMade(actual);
     }
 
     @Test
@@ -23,4 +22,9 @@ public class TicketOfficeTest {
     @Test
     @Ignore("TODO")
     public void testReservingASeatOnTrainWithCoachThatIsEmpty() {}
+
+    private void assertNoReservationMade(Reservation reservation) {
+        Assert.assertTrue(reservation.seats.isEmpty());
+        Assert.assertTrue(reservation.bookingId.isEmpty());
+    }
 }
