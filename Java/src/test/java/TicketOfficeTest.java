@@ -1,11 +1,12 @@
 import org.junit.*;
-import static org.junit.Assert.*;
 
 public class TicketOfficeTest {
-    
-    @Test
-    public void reserveSeats() {
-        // TODO: Write this code!
 
+    /**
+     * Change the 5 to a 4 to get the test passing.
+     */
+    @Test
+    public void testFailingHookup() {
+        Assert.assertEquals(5, 2 + 2);
     }
 }
