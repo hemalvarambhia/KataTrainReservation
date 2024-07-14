@@ -1,10 +1,21 @@
 import org.junit.*;
 
+import java.util.ArrayList;
+
 public class TicketOfficeTest {
 
     @Test
-    @Ignore("TODO")
-    public void testReservingNoSeats() {}
+    public void testReservingNoSeats() {
+        TicketOffice ticketOffice = new TicketOffice();
+        ReservationRequest request = new ReservationRequest("train-LDN-OXF", 0);
+
+        Reservation actual = ticketOffice.makeReservation(request);
+
+        Reservation expected = new Reservation("train-LDN-OXF", new ArrayList<Seat>(), "");
+        Assert.assertEquals(expected.trainId, actual.trainId);
+        Assert.assertEquals(new ArrayList<Seat>(), actual.seats);
+        Assert.assertTrue(actual.bookingId.isEmpty());
+    }
 
     @Test
     @Ignore("TODO")
