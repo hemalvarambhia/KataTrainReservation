@@ -18,7 +18,7 @@ public class Reservation {
     }
 
     public String[] seatsReserved() {
-        return new String[]{seatNumber(seats.get(0))};
+        return new String[]{seats.get(0).number()};
     }
 
     private String seatNumber(Seat seat) {
