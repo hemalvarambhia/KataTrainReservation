@@ -21,10 +21,6 @@ public class Reservation {
         return new String[]{seats.get(0).number()};
     }
 
-    private String seatNumber(Seat seat) {
-        return seat.number();
-    }
-
     public boolean nothingBooked() {
         return bookingId.isEmpty() && seats.isEmpty();
     }
