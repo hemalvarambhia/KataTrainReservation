@@ -18,11 +18,11 @@ public class Reservation {
     }
 
     public String[] seatsReserved() {
-        return new String[]{seatNumber()};
+        return new String[]{seatNumber(seats.get(0))};
     }
 
-    private String seatNumber() {
-        return seats.get(0).coach + seats.get(0).seatNumber;
+    private String seatNumber(Seat seat) {
+        return seat.coach + seat.seatNumber;
     }
 
     public boolean nothingBooked() {
