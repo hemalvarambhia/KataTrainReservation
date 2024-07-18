@@ -22,7 +22,7 @@ public class Reservation {
     }
 
     private String seatNumber(Seat seat) {
-        return seat.coach + seat.seatNumber;
+        return seat.number();
     }
 
     public boolean nothingBooked() {

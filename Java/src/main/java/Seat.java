@@ -8,6 +8,10 @@ public class Seat {
         this.seatNumber = seatNumber;
     }
 
+    public String number() {
+        return coach + seatNumber;
+    }
+
     public boolean equals(Object o) {
         Seat other = (Seat)o;
         return coach==other.coach && seatNumber==other.seatNumber;
