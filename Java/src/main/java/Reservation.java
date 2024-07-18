@@ -17,7 +17,13 @@ public class Reservation {
         this.seats = seats;
     }
 
-    public String[] seatsReserved() { return new String[]{ seats.get(0).coach + new Integer(seats.get(0).seatNumber) }; }
+    public String[] seatsReserved() {
+        return new String[]{seatNumber()};
+    }
+
+    private String seatNumber() {
+        return seats.get(0).coach + seats.get(0).seatNumber;
+    }
 
     public boolean nothingBooked() {
         return bookingId.isEmpty() && seats.isEmpty();
