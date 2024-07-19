@@ -1,8 +1,10 @@
+import org.jmock.junit5.JUnit5Mockery;
 import org.junit.*;
+import org.jmock.Mockery;
 
 public class TicketOfficeTest {
     private TicketOffice ticketOffice;
-
+    private final Mockery context = new JUnit5Mockery();
     @Before
     public void openTicketOffice() {
         ticketOffice = new TicketOffice();
@@ -35,6 +37,8 @@ public class TicketOfficeTest {
 
     @Test
     public void testReservingASeatOnTrainWithOneCoachThatIsEmpty() {
+        TrainDataService trainDataService = context.mock(TrainDataService.class);
+
         ReservationRequest singleSeat = new ReservationRequest("train-LDN-LIV", 1);
 
         Reservation actual = ticketOffice.makeReservation(singleSeat);
