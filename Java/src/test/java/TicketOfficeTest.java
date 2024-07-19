@@ -1,6 +1,12 @@
+import org.jmock.Expectations;
 import org.jmock.junit5.JUnit5Mockery;
 import org.junit.*;
 import org.jmock.Mockery;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TicketOfficeTest {
     private TicketOffice ticketOffice;
@@ -38,6 +44,11 @@ public class TicketOfficeTest {
     @Test
     public void testReservingASeatOnTrainWithOneCoachThatIsEmpty() {
         TrainDataService trainDataService = context.mock(TrainDataService.class);
+        context.checking(new Expectations() {{
+            List<Seat> freeSeats = new ArrayList<Seat>();
+            freeSeats.add(new Seat("A", 1));
+            oneOf(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(freeSeats));
+        }});
 
         ReservationRequest singleSeat = new ReservationRequest("train-LDN-LIV", 1);
 
