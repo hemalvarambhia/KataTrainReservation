@@ -11,9 +11,10 @@ import java.util.Map;
 public class TicketOfficeTest {
     private TicketOffice ticketOffice;
     private final Mockery context = new JUnit5Mockery();
+    private final TrainDataService trainDataService = context.mock(TrainDataService.class);
     @Before
     public void openTicketOffice() {
-        ticketOffice = new TicketOffice();
+        ticketOffice = new TicketOffice(trainDataService);
     }
 
 
@@ -43,7 +44,6 @@ public class TicketOfficeTest {
 
     @Test
     public void testReservingASeatOnTrainWithOneCoachThatIsEmpty() {
-        TrainDataService trainDataService = context.mock(TrainDataService.class);
         context.checking(new Expectations() {{
             List<Seat> freeSeats = new ArrayList<Seat>();
             freeSeats.add(new Seat("A", 1));

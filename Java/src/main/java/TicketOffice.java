@@ -2,6 +2,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicketOffice {
+
+    private final TrainDataService trainDataService;
+
+    public TicketOffice(TrainDataService trainDataService) {
+        this.trainDataService = trainDataService;
+    }
     
     public Reservation makeReservation(ReservationRequest request) {
         if(request.seatCount == 1) {
