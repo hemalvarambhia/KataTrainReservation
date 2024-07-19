@@ -6,7 +6,8 @@ public class TicketOffice {
     public Reservation makeReservation(ReservationRequest request) {
         if(request.seatCount == 1) {
             List<Seat> seatsReserved = new ArrayList<Seat>();
-            seatsReserved.add(new Seat("A", 1));
+            Seat emptySeat = new Seat("A", 1);
+            seatsReserved.add(emptySeat);
             return new Reservation(request.trainId, seatsReserved, "75bcd15");
         } else {
             return Reservation.none(request.trainId);
