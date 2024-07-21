@@ -52,6 +52,7 @@ public class TicketOfficeTest {
 
         Assert.assertEquals("train-LDN-LIV", actual.trainId);
         Assert.assertArrayEquals(new String[] {"A1"}, actual.seatsReserved());
+        Assert.assertFalse("Booking Reference assigned", actual.bookingReference().isEmpty());
     }
 
     @Test

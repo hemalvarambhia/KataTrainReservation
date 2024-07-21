@@ -17,6 +17,10 @@ public class Reservation {
         this.seats = seats;
     }
 
+    public String bookingReference() {
+        return bookingId;
+    }
+
     public String[] seatsReserved() {
         return seats.stream().map(Seat::number).toArray(String[]::new);
     }
