@@ -68,6 +68,10 @@ public class TicketOfficeTest {
         Assert.assertEquals(0, reservation.seatsReserved().length);
     }
 
+    @Test
+    @Ignore("TODO - booking more than one seat in a empty train")
+    public void testReservingMoreThanOneSeatOnAnEmptyTrainWithOneCoach() {}
+
     private void assertNoReservationMade(Reservation reservation) {
         Assert.assertTrue("Expected no reservation, but got " + reservation.toString(), reservation.nothingBooked());
 
