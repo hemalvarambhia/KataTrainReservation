@@ -3,10 +3,8 @@ import org.jmock.junit5.JUnit5Mockery;
 import org.junit.*;
 import org.jmock.Mockery;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class TicketOfficeTest {
     private TicketOffice ticketOffice;
@@ -41,8 +39,10 @@ public class TicketOfficeTest {
     @Test
     public void testReservingASeatOnTrainWithOneCoachThatIsEmpty() {
         context.checking(new Expectations() {{
-            List<Seat> freeSeats = new ArrayList<Seat>();
-            freeSeats.add(new Seat("A", 1));
+            List<Seat> freeSeats =
+                    Arrays
+                            .stream(new Seat[] { new Seat("A", 1) })
+                            .collect(Collectors.toList());
             allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(freeSeats));
         }});
 
