@@ -43,7 +43,7 @@ public class TicketOfficeTest {
         context.checking(new Expectations() {{
             List<Seat> freeSeats = new ArrayList<Seat>();
             freeSeats.add(new Seat("A", 1));
-            oneOf(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(freeSeats));
+            allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(freeSeats));
         }});
 
         ReservationRequest singleSeat = new ReservationRequest("train-LDN-LIV", 1);
