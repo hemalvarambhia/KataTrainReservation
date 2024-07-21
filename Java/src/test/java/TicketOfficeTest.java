@@ -39,10 +39,6 @@ public class TicketOfficeTest {
     }
 
     @Test
-    @Ignore("TODO")
-    public void testReservingASeatOnTrainWithNoCoaches() {}
-
-    @Test
     public void testReservingASeatOnTrainWithOneCoachThatIsEmpty() {
         context.checking(new Expectations() {{
             List<Seat> freeSeats = new ArrayList<Seat>();
@@ -57,6 +53,10 @@ public class TicketOfficeTest {
         Assert.assertEquals("train-LDN-LIV", actual.trainId);
         Assert.assertArrayEquals(new String[] {"A1"}, actual.seatsReserved());
     }
+
+    @Test
+    @Ignore("TODO: the train has one coach and it is full.")
+    public void testReservingASeatOnATrainWithOneCoachThatIsFull() {}
 
     private void assertNoReservationMade(Reservation reservation) {
         Assert.assertTrue(reservation.nothingBooked());
