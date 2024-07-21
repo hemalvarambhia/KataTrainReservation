@@ -11,9 +11,7 @@ public class TicketOffice {
     
     public Reservation makeReservation(ReservationRequest request) {
         if(request.seatCount == 1) {
-            List<Seat> seatsReserved = new ArrayList<Seat>();
-            Seat emptySeat = new Seat("A", 1);
-            seatsReserved.add(emptySeat);
+            List<Seat> seatsReserved = trainDataService.availableSeatsOn(request.trainId);
             return new Reservation(request.trainId, seatsReserved, "75bcd15");
         } else {
             return Reservation.none(request.trainId);
