@@ -25,4 +25,8 @@ public class Reservation {
         return bookingId.isEmpty() && seats.isEmpty();
     }
 
+    public String toString() {
+        return String.format("Booking reference: %s train ID: %s, seats: %s", bookingId, trainId, seats);
+    }
+
 }
