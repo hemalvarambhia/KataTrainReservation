@@ -55,10 +55,21 @@ public class TicketOfficeTest {
     }
 
     @Test
-    @Ignore("TODO: the train has one coach and it is full.")
-    public void testReservingASeatOnATrainWithOneCoachThatIsFull() {}
+    public void testReservingASeatOnATrainWithOneCoachThatIsFull() {
+        ReservationRequest request = new ReservationRequest("train-LDN-CAM", 1);
+        context.checking(new Expectations(){{
+            List<Seat> noSeatsAvailable = new ArrayList<>();
+            allowing(trainDataService).availableSeatsOn("train-LDN-CAM"); will(returnValue(noSeatsAvailable));
+        }});
+
+        Reservation reservation = ticketOffice.makeReservation(request);
+
+        assertNoReservationMade(reservation);
+        Assert.assertEquals(0, reservation.seatsReserved().length);
+    }
 
     private void assertNoReservationMade(Reservation reservation) {
-        Assert.assertTrue(reservation.nothingBooked());
+        Assert.assertTrue("Expected no reservation, but got " + reservation.toString(), reservation.nothingBooked());
+
     }
 }

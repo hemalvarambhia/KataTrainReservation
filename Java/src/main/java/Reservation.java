@@ -18,7 +18,7 @@ public class Reservation {
     }
 
     public String[] seatsReserved() {
-        return new String[]{seats.get(0).number()};
+        return seats.stream().map(Seat::number).toArray(String[]::new);
     }
 
     public boolean nothingBooked() {
