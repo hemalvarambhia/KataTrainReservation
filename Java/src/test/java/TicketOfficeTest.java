@@ -11,9 +11,10 @@ public class TicketOfficeTest {
     private TicketOffice ticketOffice;
     private final Mockery context = new JUnit5Mockery();
     private final TrainDataService trainDataService = context.mock(TrainDataService.class);
+    private final BookingReferenceGenerator referenceGenerator = context.mock(BookingReferenceGenerator.class);
     @Before
     public void openTicketOffice() {
-        ticketOffice = new TicketOffice(trainDataService);
+        ticketOffice = new TicketOffice(trainDataService, referenceGenerator);
     }
 
 
@@ -43,6 +44,7 @@ public class TicketOfficeTest {
                 new Expectations() {{
                     List<Seat> freeSeats = Arrays.stream(new Seat[] { new Seat("A", 1) }).collect(Collectors.toList());
                     allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(freeSeats));
+                    allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
 
                     oneOf(trainDataService).reserve(
                             with(equal("train-LDN-LIV")),
@@ -73,6 +75,7 @@ public class TicketOfficeTest {
                     with(new String[]{}),
                     with(Matchers.any(String.class))
             ); will(returnValue(true));
+            never(referenceGenerator).generate();
         }});
 
         Reservation reservation = ticketOffice.makeReservation(request);
