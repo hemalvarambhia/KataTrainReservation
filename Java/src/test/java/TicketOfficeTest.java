@@ -96,8 +96,31 @@ public class TicketOfficeTest {
     }
 
     @Test
-    @Ignore("TODO - booking more than one seat in a empty train")
-    public void testReservingMoreThanOneSeatOnAnEmptyTrainWithOneCoach() {}
+    public void testReservingMoreThanOneSeatOnAnEmptyTrainWithOneCoach() {
+        context.checking(
+                new Expectations() {{
+                    List<Seat> freeSeats = Arrays.stream(
+                            new Seat[] { new Seat("A", 1), new Seat("A", 2) }
+                    ).collect(Collectors.toList());
+                    allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-CAR"))); will(returnValue(freeSeats));
+                    allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
+
+                    oneOf(trainDataService).reserve(
+                            with(equal("train-LDN-CAR")),
+                            with(new String[]{"A1", "A2"}),
+                            with(Matchers.any(String.class))
+                    ); will(returnValue(true));
+                }});
+
+        ReservationRequest singleSeat = new ReservationRequest("train-LDN-CAR", 2);
+
+        Reservation actual = ticketOffice.makeReservation(singleSeat);
+
+        Assert.assertEquals("train-LDN-CAR", actual.trainId);
+        Assert.assertArrayEquals(new String[] {"A1", "A2"}, actual.seatsReserved());
+        Assert.assertFalse("Booking Reference assigned", actual.bookingReference().isEmpty());
+        context.assertIsSatisfied();
+    }
 
     private void assertNoReservationMade(Reservation reservation) {
         Assert.assertTrue("Expected no reservation, but got " + reservation.toString(), reservation.nothingBooked());
