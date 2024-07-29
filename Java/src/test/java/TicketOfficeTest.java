@@ -122,6 +122,18 @@ public class TicketOfficeTest {
         context.assertIsSatisfied();
     }
 
+    @Test
+    @Ignore("Test list: Booking Seats In Trains With One Coach Where The Reservation Is At Limit")
+    public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationIsAtLimit(){}
+
+    @Test
+    @Ignore("Test list: Booking Seats In Trains With One Coach Where The Reservation Would Lead To Limit Being Exceeded")
+    public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationWouldLeadToLimitBeingExceeded(){}
+
+    @Test
+    @Ignore("Test list: Booking Seats In Trains With One Coach Where The Reservation Would Hit The Limit")
+    public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationWouldHitTheLimit(){}
+
     private void assertNoReservationMade(Reservation reservation) {
         Assert.assertTrue("Expected no reservation, but got " + reservation.toString(), reservation.nothingBooked());
 
