@@ -20,22 +20,32 @@ public class TicketOfficeTest {
 
     @Test
     public void testReservingNoSeats() {
+        context.checking(new Expectations(){{
+            never(trainDataService);
+            never(referenceGenerator);
+        }});
         ReservationRequest request = new ReservationRequest("train-LDN-OXF", 0);
 
         Reservation actual = ticketOffice.makeReservation(request);
 
         Assert.assertEquals("train-LDN-OXF", actual.trainId);
         assertNoReservationMade(actual);
+        context.assertIsSatisfied();
     }
 
     @Test
     public void testReservingNoSeatsOnAnyTrain() {
+        context.checking(new Expectations(){{
+            never(trainDataService);
+            never(referenceGenerator);
+        }});
         ReservationRequest singleSeat = new ReservationRequest("train-LDN-EDB", 0);
 
         Reservation actual = ticketOffice.makeReservation(singleSeat);
 
         Assert.assertEquals("train-LDN-EDB", actual.trainId);
         assertNoReservationMade(actual);
+        context.assertIsSatisfied();
     }
 
     @Test
