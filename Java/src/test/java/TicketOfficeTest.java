@@ -1,3 +1,4 @@
+import org.hamcrest.Matchers;
 import org.jmock.Expectations;
 import org.jmock.junit5.JUnit5Mockery;
 import org.junit.*;
@@ -5,6 +6,8 @@ import org.jmock.Mockery;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.hamcrest.Matchers.arrayContaining;
 
 public class TicketOfficeTest {
     private TicketOffice ticketOffice;
@@ -38,12 +41,16 @@ public class TicketOfficeTest {
 
     @Test
     public void testReservingASeatOnTrainWithOneCoachThatIsEmpty() {
-        context.checking(new Expectations() {{
-            List<Seat> freeSeats =
-                    Arrays
-                            .stream(new Seat[] { new Seat("A", 1) })
-                            .collect(Collectors.toList());
-            allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(freeSeats));
+        context.checking(
+                new Expectations() {{
+                    List<Seat> freeSeats = Arrays.stream(new Seat[] { new Seat("A", 1) }).collect(Collectors.toList());
+                    allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(freeSeats));
+
+                    oneOf(trainDataService).reserve(
+                            with(equal("train-LDN-LIV")),
+                            with(new String[]{"A1"}),
+                            with(Matchers.any(String.class))
+                    ); will(returnValue(true));
         }});
 
         ReservationRequest singleSeat = new ReservationRequest("train-LDN-LIV", 1);
@@ -53,6 +60,7 @@ public class TicketOfficeTest {
         Assert.assertEquals("train-LDN-LIV", actual.trainId);
         Assert.assertArrayEquals(new String[] {"A1"}, actual.seatsReserved());
         Assert.assertFalse("Booking Reference assigned", actual.bookingReference().isEmpty());
+        context.assertIsSatisfied();
     }
 
     @Test
@@ -61,12 +69,19 @@ public class TicketOfficeTest {
         context.checking(new Expectations(){{
             List<Seat> noSeatsAvailable = new ArrayList<>();
             allowing(trainDataService).availableSeatsOn("train-LDN-CAM"); will(returnValue(noSeatsAvailable));
+
+            oneOf(trainDataService).reserve(
+                    with(equal("train-LDN-CAM")),
+                    with(new String[]{}),
+                    with(Matchers.any(String.class))
+            ); will(returnValue(true));
         }});
 
         Reservation reservation = ticketOffice.makeReservation(request);
 
         assertNoReservationMade(reservation);
         Assert.assertEquals(0, reservation.seatsReserved().length);
+        context.assertIsSatisfied();
     }
 
     @Test
