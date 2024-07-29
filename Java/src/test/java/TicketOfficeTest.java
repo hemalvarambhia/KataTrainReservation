@@ -7,8 +7,6 @@ import org.jmock.Mockery;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.hamcrest.Matchers.arrayContaining;
-
 public class TicketOfficeTest {
     private TicketOffice ticketOffice;
     private final Mockery context = new JUnit5Mockery();
