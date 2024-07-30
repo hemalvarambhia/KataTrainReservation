@@ -112,9 +112,9 @@ public class TicketOfficeTest {
                     ); will(returnValue(true));
                 }});
 
-        ReservationRequest singleSeat = new ReservationRequest("train-LDN-CAR", 2);
+        ReservationRequest multipleSeats = new ReservationRequest("train-LDN-CAR", 2);
 
-        Reservation actual = ticketOffice.makeReservation(singleSeat);
+        Reservation actual = ticketOffice.makeReservation(multipleSeats);
 
         Assert.assertEquals("train-LDN-CAR", actual.trainId);
         Assert.assertArrayEquals(new String[] {"A1", "A2"}, actual.seatsReserved());
