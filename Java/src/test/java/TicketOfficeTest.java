@@ -67,9 +67,7 @@ public class TicketOfficeTest {
 
         Reservation actual = ticketOffice.makeReservation(singleSeat);
 
-        Assert.assertEquals("train-LDN-LIV", actual.trainId);
-        Assert.assertArrayEquals(new String[] {"A1"}, actual.seatsReserved());
-        Assert.assertFalse("Booking Reference assigned", actual.bookingReference().isEmpty());
+        assertReservationMadeOn("train-LDN-LIV", new String[] {"A1"}, actual);
         context.assertIsSatisfied();
     }
 
@@ -116,15 +114,15 @@ public class TicketOfficeTest {
 
         Reservation actual = ticketOffice.makeReservation(multipleSeats);
 
-        Assert.assertEquals("train-LDN-CAR", actual.trainId);
-        Assert.assertArrayEquals(new String[] {"A1", "A2"}, actual.seatsReserved());
-        Assert.assertFalse("Booking Reference assigned", actual.bookingReference().isEmpty());
+        assertReservationMadeOn("train-LDN-CAR", new String[] {"A1", "A2"}, actual);
         context.assertIsSatisfied();
     }
 
     @Test
     @Ignore("Test list: Booking Seats In Trains With One Coach Where The Reservation Is At Limit")
-    public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationIsAtLimit(){}
+    public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationIsAtLimit(){
+
+    }
 
     @Test
     @Ignore("Test list: Booking Seats In Trains With One Coach Where The Reservation Would Lead To Limit Being Exceeded")
@@ -137,5 +135,11 @@ public class TicketOfficeTest {
     private void assertNoReservationMade(Reservation reservation) {
         Assert.assertTrue("Expected no reservation, but got " + reservation.toString(), reservation.nothingBooked());
 
+    }
+
+    private void assertReservationMadeOn(String train, String[] seats, Reservation actual) {
+        Assert.assertEquals(train, actual.trainId);
+        Assert.assertArrayEquals(seats, actual.seatsReserved());
+        Assert.assertFalse("Booking Reference assigned", actual.bookingReference().isEmpty());
     }
 }
