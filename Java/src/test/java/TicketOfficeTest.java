@@ -36,7 +36,7 @@ public class TicketOfficeTest {
     @Test
     public void testReservingNoSeatsOnAnyTrain() {
         context.checking(new Expectations(){{
-            never(trainDataService).reserve(with(Matchers.any(String.class)), with(Matchers.any(String[].class)), with(Matchers.any(String.class)));
+            never(trainDataService).reserve(with(any(String.class)), with(any(String[].class)), with(any(String.class)));
             never(referenceGenerator).generate();
         }});
         ReservationRequest singleSeat = new ReservationRequest("train-LDN-EDB", 0);
