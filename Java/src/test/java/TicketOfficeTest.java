@@ -78,9 +78,10 @@ public class TicketOfficeTest {
             List<Seat> noSeatsAvailable = new ArrayList<>();
             allowing(trainDataService).availableSeatsOn("train-LDN-CAM"); will(returnValue(noSeatsAvailable));
             never(referenceGenerator).generate();
+            String[] noSeats = {};
             oneOf(trainDataService).reserve(
                     with(equal("train-LDN-CAM")),
-                    with(new String[]{}),
+                    with(noSeats),
                     with(any(String.class))
             ); will(returnValue(true));
         }});
