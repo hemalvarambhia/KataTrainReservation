@@ -1,4 +1,3 @@
-import org.hamcrest.Matchers;
 import org.jmock.Expectations;
 import org.jmock.junit5.JUnit5Mockery;
 import org.junit.*;
@@ -49,7 +48,7 @@ public class TicketOfficeTest {
     }
 
     @Test
-    public void testReservingASeatOnTrainWithOneCoachThatIsEmpty() {
+    public void testASeatCanBeReservedOnAnEmptyTrainWithOneCoach() {
         context.checking(
                 new Expectations() {{
                     List<Seat> freeSeats = Arrays.stream(new Seat[] { new Seat("A", 1) }).collect(Collectors.toList());
@@ -72,7 +71,7 @@ public class TicketOfficeTest {
     }
 
     @Test
-    public void testReservingASeatOnATrainWithOneCoachThatIsFull() {
+    public void testNoSeatsCanBeReservedOnATrainWithOneCoachThatIsFull() {
         ReservationRequest request = new ReservationRequest("train-LDN-CAM", 1);
         context.checking(new Expectations(){{
             List<Seat> noSeatsAvailable = new ArrayList<>();
