@@ -59,7 +59,7 @@ public class TicketOfficeTest {
                     oneOf(trainDataService).reserve(
                             with(equal("train-LDN-LIV")),
                             with(new String[]{"A1"}),
-                            with(any(String.class))
+                            with("a booking reference")
                     ); will(returnValue(true));
         }});
 
@@ -77,13 +77,12 @@ public class TicketOfficeTest {
         context.checking(new Expectations(){{
             List<Seat> noSeatsAvailable = new ArrayList<>();
             allowing(trainDataService).availableSeatsOn("train-LDN-CAM"); will(returnValue(noSeatsAvailable));
-
+            never(referenceGenerator).generate();
             oneOf(trainDataService).reserve(
                     with(equal("train-LDN-CAM")),
                     with(new String[]{}),
                     with(any(String.class))
             ); will(returnValue(true));
-            never(referenceGenerator).generate();
         }});
 
         Reservation reservation = ticketOffice.makeReservation(request);
