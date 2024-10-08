@@ -93,7 +93,7 @@ public class TicketOfficeTest {
     }
 
     @Test
-    public void testReservingMoreThanOneSeatOnAnEmptyTrainWithOneCoach() {
+    public void testMoreThanOneSeatCanBeReservedOnAnEmptyTrainWithOneCoach() {
         context.checking(
                 new Expectations() {{
                     List<Seat> freeSeats = Arrays.stream(
