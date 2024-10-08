@@ -11,11 +11,11 @@ public class TicketOfficeTest {
     private final Mockery context = new JUnit5Mockery();
     private final TrainDataService trainDataService = context.mock(TrainDataService.class);
     private final BookingReferenceGenerator referenceGenerator = context.mock(BookingReferenceGenerator.class);
+
     @Before
     public void openTicketOffice() {
         ticketOffice = new TicketOffice(trainDataService, referenceGenerator);
     }
-
 
     @Test
     public void testReservingNoSeats() {
