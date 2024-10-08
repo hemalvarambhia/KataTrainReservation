@@ -118,9 +118,21 @@ public class TicketOfficeTest {
     }
 
     @Test
-    @Ignore("Test list: Booking Seats In Trains With One Coach Where The Reservation Is At Limit")
     public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationIsAtLimit(){
+        context.checking(new Expectations() {{
+            allowing(trainDataService).availableSeatsOn("train-LDN-LIV"); will(returnValue(new ArrayList<>()));
+            never(referenceGenerator).generate();
+            oneOf(trainDataService).reserve(
+                    with(equal("train-LDN-LIV")),
+                    with(equal(new String[]{})),
+                    with(equal(""))
+            );
+        }});
 
+        ReservationRequest request = new ReservationRequest("train-LDN-LIV", 1);
+        Reservation reservation = ticketOffice.makeReservation(request);
+        assertNoReservationMade(reservation);
+        context.assertIsSatisfied();
     }
 
     @Test
