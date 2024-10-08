@@ -118,7 +118,7 @@ public class TicketOfficeTest {
     }
 
     @Test
-    public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationIsAtLimit(){
+    public void testNoSeatsCanBeBookedInTrainsWithOneCoachWhereTheReservationIsAtLimit(){
         context.checking(new Expectations() {{
             allowing(trainDataService).availableSeatsOn("train-LDN-LIV"); will(returnValue(new ArrayList<>()));
             never(referenceGenerator).generate();
