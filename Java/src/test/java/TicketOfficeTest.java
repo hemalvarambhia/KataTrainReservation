@@ -147,10 +147,10 @@ public class TicketOfficeTest {
                 .collect(Collectors.toList());
     }
 
-    private static Seat from(String seatNumber) {
-        String letter = Character.toString(seatNumber.charAt(0));
-        int number = Character.getNumericValue(seatNumber.charAt(1));
-        return new Seat(letter, number);
+    private static Seat from(String seat) {
+        String coach = Character.toString(seat.charAt(0));
+        int seatNumber = Character.getNumericValue(seat.charAt(1));
+        return new Seat(coach, seatNumber);
     }
 
     private void assertNoReservationMade(Reservation reservation) {
