@@ -52,6 +52,7 @@ public class TicketOfficeTest {
         context.checking(
                 new Expectations() {{
                     List<Seat> freeSeats = Arrays.stream(new Seat[] { new Seat("A", 1) }).collect(Collectors.toList());
+                    freeSeats = seats(new String[] {"A1"});
                     allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(freeSeats));
                     allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
 
@@ -142,6 +143,18 @@ public class TicketOfficeTest {
     @Test
     @Ignore("Test list: Booking Seats In Trains With One Coach Where The Reservation Would Hit The Limit")
     public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationWouldHitTheLimit(){}
+
+    private List<Seat> seats(String [] seatNumbers) {
+        return Arrays.stream(seatNumbers)
+                .map(TicketOfficeTest::from)
+                .collect(Collectors.toList());
+    }
+
+    private static Seat from(String seatNumber) {
+        String letter = String.valueOf(seatNumber.charAt(0));
+        int number = seatNumber.charAt(1) - '0';
+        return new Seat(letter, number);
+    }
 
     private void assertNoReservationMade(Reservation reservation) {
         Assert.assertTrue("Expected no reservation, but got " + reservation.toString(), reservation.nothingBooked());
