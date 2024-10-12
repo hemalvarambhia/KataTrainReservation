@@ -51,8 +51,7 @@ public class TicketOfficeTest {
     public void testASeatCanBeReservedOnAnEmptyTrainWithOneCoach() {
         context.checking(
                 new Expectations() {{
-                    List<Seat> freeSeats = Arrays.stream(new Seat[] { new Seat("A", 1) }).collect(Collectors.toList());
-                    freeSeats = seats(new String[] {"A1"});
+                    List<Seat> freeSeats = seats(new String[] {"A1"});
                     allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(freeSeats));
                     allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
 
