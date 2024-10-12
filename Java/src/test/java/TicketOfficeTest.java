@@ -96,9 +96,7 @@ public class TicketOfficeTest {
     public void testMoreThanOneSeatCanBeReservedOnAnEmptyTrainWithOneCoach() {
         context.checking(
                 new Expectations() {{
-                    List<Seat> freeSeats = Arrays.stream(
-                            new Seat[] { new Seat("A", 1), new Seat("A", 2) }
-                    ).collect(Collectors.toList());
+                    List<Seat> freeSeats = seats("A1", "A2");
                     allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-CAR"))); will(returnValue(freeSeats));
                     allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
 
@@ -150,8 +148,8 @@ public class TicketOfficeTest {
     }
 
     private static Seat from(String seatNumber) {
-        String letter = String.valueOf(seatNumber.charAt(0));
-        int number = seatNumber.charAt(1) - '0';
+        String letter = Character.toString(seatNumber.charAt(0));
+        int number = Character.getNumericValue(seatNumber.charAt(1));
         return new Seat(letter, number);
     }
 
