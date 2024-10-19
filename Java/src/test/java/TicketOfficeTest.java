@@ -35,8 +35,8 @@ public class TicketOfficeTest {
     @Test
     public void testReservingNoSeatsOnAnyTrain() {
         context.checking(new Expectations(){{
-            never(trainDataService).reserve(with(any(String.class)), with(any(String[].class)), with(any(String.class)));
-            never(referenceGenerator).generate();
+            never(trainDataService);
+            never(referenceGenerator);
         }});
         ReservationRequest singleSeat = new ReservationRequest("train-LDN-EDB", 0);
 
@@ -76,7 +76,7 @@ public class TicketOfficeTest {
         context.checking(new Expectations(){{
             List<Seat> noSeatsAvailable = new ArrayList<>();
             allowing(trainDataService).availableSeatsOn("train-LDN-CAM"); will(returnValue(noSeatsAvailable));
-            never(referenceGenerator).generate();
+            never(referenceGenerator);
             String[] noSeats = {};
             oneOf(trainDataService).reserve(
                     with(equal("train-LDN-CAM")),
