@@ -81,7 +81,7 @@ public class TicketOfficeTest {
             oneOf(trainDataService).reserve(
                     with(equal("train-LDN-CAM")),
                     with(equal(noSeats)),
-                    with(any(String.class))
+                    with(equal(""))
             ); will(returnValue(true));
         }});
 
@@ -103,7 +103,7 @@ public class TicketOfficeTest {
                     oneOf(trainDataService).reserve(
                             with(equal("train-LDN-CAR")),
                             with(new String[]{"A1", "A2"}),
-                            with(any(String.class))
+                            with(equal("a booking reference"))
                     ); will(returnValue(true));
                 }});
 
