@@ -86,7 +86,6 @@ public class TicketOfficeTest {
         Reservation reservation = ticketOffice.makeReservation(request);
 
         assertNoReservationMade(reservation);
-        Assert.assertEquals(0, reservation.seatsReserved().length);
         context.assertIsSatisfied();
     }
 
@@ -158,6 +157,7 @@ public class TicketOfficeTest {
     }
 
     private void assertNoReservationMade(Reservation reservation) {
+        Assert.assertEquals(0, reservation.seatsReserved().length);
         Assert.assertTrue("Expected no reservation, but got " + reservation.toString(), reservation.nothingBooked());
 
     }
