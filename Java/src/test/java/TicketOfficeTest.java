@@ -27,8 +27,7 @@ public class TicketOfficeTest {
 
         Reservation actual = ticketOffice.makeReservation(request);
 
-        Assert.assertEquals("train-LDN-OXF", actual.trainId);
-        assertNoReservationMade(actual);
+        assertNoReservationWasMadeOn("train-LDN-OXF", actual);
         context.assertIsSatisfied();
     }
 
@@ -42,8 +41,7 @@ public class TicketOfficeTest {
 
         Reservation actual = ticketOffice.makeReservation(singleSeat);
 
-        Assert.assertEquals("train-LDN-EDB", actual.trainId);
-        assertNoReservationMade(actual);
+        assertNoReservationWasMadeOn("train-LDN-EDB", actual);
         context.assertIsSatisfied();
     }
 
@@ -130,8 +128,7 @@ public class TicketOfficeTest {
 
         Reservation reservation = ticketOffice.makeReservation(request);
 
-        Assert.assertEquals("train-LDN-LIV", reservation.trainId);
-        assertNoReservationMade(reservation);
+        assertNoReservationWasMadeOn("train-LDN-LIV", reservation);
         context.assertIsSatisfied();
     }
 
@@ -153,6 +150,11 @@ public class TicketOfficeTest {
         String coach = Character.toString(seat.charAt(0));
         int seatNumber = Character.getNumericValue(seat.charAt(1));
         return new Seat(coach, seatNumber);
+    }
+
+    private void assertNoReservationWasMadeOn(String expected, Reservation reservation) {
+        Assert.assertEquals(expected, reservation.trainId);
+        assertNoReservationMade(reservation);
     }
 
     private void assertNoReservationMade(Reservation reservation) {
