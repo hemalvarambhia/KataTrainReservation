@@ -126,9 +126,10 @@ public class TicketOfficeTest {
                     with(equal(""))
             );
         }});
-
         ReservationRequest request = new ReservationRequest("train-LDN-LIV", 1);
+
         Reservation reservation = ticketOffice.makeReservation(request);
+
         assertNoReservationMade(reservation);
         context.assertIsSatisfied();
     }
