@@ -130,6 +130,7 @@ public class TicketOfficeTest {
 
         Reservation reservation = ticketOffice.makeReservation(request);
 
+        Assert.assertEquals("train-LDN-LIV", reservation.trainId);
         assertNoReservationMade(reservation);
         context.assertIsSatisfied();
     }
