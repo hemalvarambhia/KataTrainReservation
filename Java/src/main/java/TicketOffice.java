@@ -12,11 +12,11 @@ public class TicketOffice {
     
     public Reservation makeReservation(ReservationRequest request) {
         if(request.seatCount >= 1) {
-            List<Seat> seatsReserved = trainDataService.availableSeatsOn(request.trainId);
-            String bookingReference = seatsReserved.isEmpty() ? "" : bookingReferenceGenerator.generate();
+            List<Seat> availableSeats = trainDataService.availableSeatsOn(request.trainId);
+            String bookingReference = availableSeats.isEmpty() ? "" : bookingReferenceGenerator.generate();
 
-            trainDataService.reserve(request.trainId, seatsReserved.stream().map(Seat::number).toArray(String[]::new), bookingReference);
-            return new Reservation(request.trainId, seatsReserved, bookingReference);
+            trainDataService.reserve(request.trainId, availableSeats.stream().map(Seat::number).toArray(String[]::new), bookingReference);
+            return new Reservation(request.trainId, availableSeats, bookingReference);
         } else {
             return Reservation.none(request.trainId);
         }
