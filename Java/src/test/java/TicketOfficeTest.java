@@ -153,8 +153,7 @@ public class TicketOfficeTest {
 
     private void assertNoReservationWasMadeOn(String trainId, Reservation reservation) {
         Assert.assertEquals(trainId, reservation.trainId);
-        Assert.assertEquals(0, reservation.seatsReserved().length);
-        Assert.assertTrue("Expected no reservation, but got " + reservation.toString(), reservation.nothingBooked());
+        Assert.assertTrue("Expected no reservation, but got " + reservation, reservation.nothingBooked());
     }
 
     private void assertReservationMadeOn(String train, String[] seats, Reservation actual) {
