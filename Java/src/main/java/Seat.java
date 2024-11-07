@@ -12,6 +12,10 @@ public class Seat {
         return coach + seatNumber;
     }
 
+    public String toString() {
+        return number();
+    }
+
     public boolean equals(Object o) {
         Seat other = (Seat)o;
         return coach==other.coach && seatNumber==other.seatNumber;
