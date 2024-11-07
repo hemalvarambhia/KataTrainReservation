@@ -14,6 +14,9 @@ public class TicketOffice {
         if(request.seatCount >= 1) {
             List<Seat> availableSeats = trainDataService.availableSeatsOn(request.trainId);
             String bookingReference = availableSeats.isEmpty() ? "" : bookingReferenceGenerator.generate();
+            if(availableSeats.isEmpty()) {
+                return Reservation.none(request.trainId);
+            }
 
             String[] seatNumbers = availableSeats.stream().map(Seat::number).toArray(String[]::new);
             trainDataService.reserve(request.trainId, seatNumbers, bookingReference);
