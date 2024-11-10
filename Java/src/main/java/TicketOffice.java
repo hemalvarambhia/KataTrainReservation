@@ -18,13 +18,17 @@ public class TicketOffice {
                 return Reservation.none(train);
             }
 
-            String bookingReference = bookingReferenceGenerator.generate();
-            String[] seatNumbers = availableSeats.stream().map(Seat::number).toArray(String[]::new);
-            trainDataService.reserve(train, seatNumbers, bookingReference);
+            String bookingReference = reserveSeatsOn(train, availableSeats);
             return new Reservation(request.trainId, availableSeats, bookingReference);
         } else {
             return Reservation.none(request.trainId);
         }
     }
 
+    private String reserveSeatsOn(String train, List<Seat> seatsToReserve) {
+        String bookingReference = bookingReferenceGenerator.generate();
+        String[] seatNumbers = seatsToReserve.stream().map(Seat::number).toArray(String[]::new);
+        trainDataService.reserve(train, seatNumbers, bookingReference);
+        return bookingReference;
+    }
 }
