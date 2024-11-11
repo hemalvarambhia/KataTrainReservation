@@ -69,6 +69,10 @@ public class TicketOfficeTest {
     }
 
     @Test
+    @Ignore("Test List: test only the number of seats requested are booked")
+    public void testOnlyNumberOfSeatsRequestedAreBooked() {}
+
+    @Test
     public void testNoSeatsCanBeReservedOnATrainWithOneCoachThatIsFull() {
         ReservationRequest request = new ReservationRequest("train-LDN-CAM", 1);
         context.checking(new Expectations(){{
