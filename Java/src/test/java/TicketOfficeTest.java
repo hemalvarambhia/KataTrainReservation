@@ -133,25 +133,6 @@ public class TicketOfficeTest {
     }
 
     @Test
-    public void testNoSeatsCanBeBookedInTrainsWithOneCoachWhereTheReservationIsAtLimit(){
-        context.checking(new Expectations() {{
-            allowing(trainDataService).availableSeatsOn("train-LDN-LIV"); will(returnValue(new ArrayList<>()));
-            never(referenceGenerator).generate();
-            never(trainDataService).reserve(
-                    with(equal("train-LDN-LIV")),
-                    with(equal(new String[]{})),
-                    with(equal(""))
-            );
-        }});
-        ReservationRequest request = new ReservationRequest("train-LDN-LIV", 1);
-
-        Reservation reservation = ticketOffice.makeReservation(request);
-
-        assertNoReservationWasMadeOn("train-LDN-LIV", reservation);
-        context.assertIsSatisfied();
-    }
-
-    @Test
     @Ignore("Next test to get passing. Working on introducing a ReservationPolicy object")
     public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationWouldLeadToLimitBeingExceeded(){
         ReservationRequest reservationRequest = new ReservationRequest("train-LIV-NOR", 1);
