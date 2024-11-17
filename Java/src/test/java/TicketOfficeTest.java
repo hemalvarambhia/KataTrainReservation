@@ -11,10 +11,11 @@ public class TicketOfficeTest {
     private final Mockery context = new JUnit5Mockery();
     private final TrainDataService trainDataService = context.mock(TrainDataService.class);
     private final BookingReferenceGenerator referenceGenerator = context.mock(BookingReferenceGenerator.class);
+    private final ReservationPolicy reservationPolicy = context.mock(ReservationPolicy.class);
 
     @Before
     public void openTicketOffice() {
-        ticketOffice = new TicketOffice(trainDataService, referenceGenerator);
+        ticketOffice = new TicketOffice(trainDataService, referenceGenerator, reservationPolicy);
     }
 
     @Test
@@ -153,8 +154,25 @@ public class TicketOfficeTest {
     }
 
     @Test
-    @Ignore("Test list: Booking Seats In Trains With One Coach Where The Reservation Would Lead To Limit Being Exceeded")
-    public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationWouldLeadToLimitBeingExceeded(){}
+    @Ignore("Next test to get passing. Working on introducing a ReservationPolicy object")
+    public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationWouldLeadToLimitBeingExceeded(){
+        ReservationRequest reservationRequest = new ReservationRequest("train-LIV-NOR", 1);
+
+        context.checking(
+                new Expectations() {{
+                    List<Seat> freeSeats = seats("A1", "A2");
+                    allowing(trainDataService).availableSeatsOn(with(equal("train-LIV-NOR"))); will(returnValue(freeSeats));
+                    allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
+                    allowing(reservationPolicy).policyMet(reservationRequest); will(returnValue(false));
+                    never(trainDataService).reserve(with(equal("train-LIV-NOR")), with(any(String[].class)), with(any(String.class))); will(returnValue(true));
+        }}
+        );
+
+        Reservation reservation = ticketOffice.makeReservation(reservationRequest);
+
+        assertNoReservationWasMadeOn("train-LIV-NOR", reservation);
+        context.assertIsSatisfied();
+    }
 
     @Test
     @Ignore("Test list: Booking Seats In Trains With One Coach Where The Reservation Would Hit The Limit")

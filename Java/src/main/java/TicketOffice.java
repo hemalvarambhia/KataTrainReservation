@@ -7,7 +7,9 @@ public class TicketOffice {
     private final TrainDataService trainDataService;
     private final BookingReferenceGenerator bookingReferenceGenerator;
 
-    public TicketOffice(TrainDataService trainDataService, BookingReferenceGenerator bookingReferenceGenerator) {
+    public TicketOffice(
+            TrainDataService trainDataService,
+            BookingReferenceGenerator bookingReferenceGenerator, ReservationPolicy policy) {
         this.trainDataService = trainDataService;
         this.bookingReferenceGenerator = bookingReferenceGenerator;
     }
