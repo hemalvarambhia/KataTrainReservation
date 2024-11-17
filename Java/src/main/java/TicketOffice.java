@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TicketOffice {
 
@@ -17,9 +19,10 @@ public class TicketOffice {
             if(availableSeats.isEmpty()) {
                 return Reservation.none(train);
             }
-
-            String bookingReference = reserveSeatsOn(train, availableSeats);
-            return new Reservation(request.trainId, availableSeats, bookingReference);
+            List<Seat> seatsToBook =
+                    availableSeats.stream().limit(request.seatCount).collect(Collectors.toList());
+            String bookingReference = reserveSeatsOn(train, seatsToBook);
+            return new Reservation(request.trainId, seatsToBook, bookingReference);
         } else {
             return Reservation.none(request.trainId);
         }

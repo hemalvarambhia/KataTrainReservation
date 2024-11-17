@@ -69,8 +69,25 @@ public class TicketOfficeTest {
     }
 
     @Test
-    @Ignore("Test List: test only the number of seats requested are booked")
-    public void testOnlyNumberOfSeatsRequestedAreBooked() {}
+    public void testOnlyNumberOfSeatsRequestedAreBooked() {
+        context.checking( new Expectations(){{
+            allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(seats("A1", "A2", "A3")));
+            allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
+
+            oneOf(trainDataService).reserve(
+                    with(equal("train-LDN-LIV")),
+                    with(new String[]{"A1", "A2"}),
+                    with("a booking reference")
+            ); will(returnValue(true));
+        }}
+        );
+        ReservationRequest twoSeats = new ReservationRequest("train-LDN-LIV", 2);
+
+        Reservation actual = ticketOffice.makeReservation(twoSeats);
+
+        assertReservationMadeOn("train-LDN-LIV", new String[] {"A1", "A2"}, actual);
+        context.assertIsSatisfied();
+    }
 
     @Test
     public void testNoSeatsCanBeReservedOnATrainWithOneCoachThatIsFull() {
