@@ -4,7 +4,6 @@ import org.junit.*;
 import org.jmock.Mockery;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TicketOfficeTest {
     private TicketOffice ticketOffice;
@@ -158,7 +157,7 @@ public class TicketOfficeTest {
     public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationWouldHitTheLimit(){}
 
     private List<Seat> seats(String... seatNumbers) {
-        return Seat.seats(seatNumbers);
+        return Seat.with(seatNumbers);
     }
 
     private void assertNoReservationWasMadeOn(String expectedTrain, Reservation reservation) {
