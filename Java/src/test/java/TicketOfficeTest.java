@@ -158,15 +158,7 @@ public class TicketOfficeTest {
     public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationWouldHitTheLimit(){}
 
     private List<Seat> seats(String... seatNumbers) {
-        return Arrays.stream(seatNumbers)
-                .map(TicketOfficeTest::from)
-                .collect(Collectors.toList());
-    }
-
-    private static Seat from(String seat) {
-        String coach = Character.toString(seat.charAt(0));
-        int seatNumber = Character.getNumericValue(seat.charAt(1));
-        return new Seat(coach, seatNumber);
+        return Seat.seats(seatNumbers);
     }
 
     private void assertNoReservationWasMadeOn(String expectedTrain, Reservation reservation) {
