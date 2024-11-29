@@ -8,4 +8,7 @@ public class ReservationRequest {
         this.seatCount = seatCount;
     }
 
+    public int numberOfSeatsToBook() { return seatCount; }
+
+    public boolean noSeatsRequested() { return this.seatCount == 0; }
 }
