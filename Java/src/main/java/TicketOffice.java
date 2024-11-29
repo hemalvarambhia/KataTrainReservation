@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -6,13 +5,13 @@ public class TicketOffice {
 
     private final TrainDataService trainDataService;
     private final BookingReferenceGenerator bookingReferenceGenerator;
-    private final ReservationPolicy policy;
+    private final ReservationPolicy reservationPolicy;
 
     public TicketOffice(
             TrainDataService trainDataService,
             BookingReferenceGenerator bookingReferenceGenerator, ReservationPolicy policy) {
         this.trainDataService = trainDataService;
-        this.policy = policy;
+        this.reservationPolicy = policy;
         this.bookingReferenceGenerator = bookingReferenceGenerator;
     }
     
@@ -24,7 +23,7 @@ public class TicketOffice {
         List<Seat> availableSeats = trainDataService.availableSeatsOn(train);
         if(availableSeats.isEmpty()) { return Reservation.none(train); }
 
-        if(!policy.isSatisfiedBy(request)) { return Reservation.none(train); }
+        if(!reservationPolicy.isSatisfiedBy(request)) { return Reservation.none(train); }
         List<Seat> seatsToBook = limit(availableSeats, request.numberOfSeatsToBook());
         String bookingReference = reserveSeatsOn(train, seatsToBook);
         return new Reservation(train, seatsToBook, bookingReference);
