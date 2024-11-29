@@ -25,9 +25,13 @@ public class TicketOffice {
         if(availableSeats.isEmpty()) { return Reservation.none(train); }
 
         if(!policy.isSatisfiedBy(request)) { return Reservation.none(train); }
-        List<Seat> seatsToBook = availableSeats.stream().limit(request.seatCount).collect(Collectors.toList());
+        List<Seat> seatsToBook = limit(availableSeats, request.seatCount);
         String bookingReference = reserveSeatsOn(train, seatsToBook);
         return new Reservation(train, seatsToBook, bookingReference);
+    }
+
+    private List<Seat> limit(List<Seat> availableSeats, int numberOfSeats) {
+        return availableSeats.stream().limit(numberOfSeats).collect(Collectors.toList());
     }
 
     private String reserveSeatsOn(String train, List<Seat> seatsToReserve) {
