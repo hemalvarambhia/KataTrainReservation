@@ -47,20 +47,19 @@ public class TicketOfficeTest {
 
     @Test
     public void testASeatCanBeReservedOnAnEmptyTrainWithOneCoach() {
+        ReservationRequest singleSeat = new ReservationRequest("train-LDN-LIV", 1);
         context.checking(
                 new Expectations() {{
                     List<Seat> freeSeats = seats("A1");
                     allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(freeSeats));
                     allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
-
+                    allowing(reservationPolicy).isSatisfiedBy(singleSeat); will(returnValue(true));
                     oneOf(trainDataService).reserve(
                             with(equal("train-LDN-LIV")),
                             with(new String[]{"A1"}),
                             with("a booking reference")
                     ); will(returnValue(true));
         }});
-
-        ReservationRequest singleSeat = new ReservationRequest("train-LDN-LIV", 1);
 
         Reservation actual = ticketOffice.makeReservation(singleSeat);
 
@@ -70,10 +69,11 @@ public class TicketOfficeTest {
 
     @Test
     public void testOnlyNumberOfSeatsRequestedAreBooked() {
+        ReservationRequest twoSeats = new ReservationRequest("train-LDN-LIV", 2);
         context.checking( new Expectations(){{
             allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(seats("A1", "A2", "A3")));
             allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
-
+            allowing(reservationPolicy).isSatisfiedBy(twoSeats); will(returnValue(true));
             oneOf(trainDataService).reserve(
                     with(equal("train-LDN-LIV")),
                     with(new String[]{"A1", "A2"}),
@@ -81,7 +81,6 @@ public class TicketOfficeTest {
             ); will(returnValue(true));
         }}
         );
-        ReservationRequest twoSeats = new ReservationRequest("train-LDN-LIV", 2);
 
         Reservation actual = ticketOffice.makeReservation(twoSeats);
 
@@ -91,20 +90,19 @@ public class TicketOfficeTest {
 
     @Test
     public void testMoreThanOneSeatCanBeReservedOnAnEmptyTrainWithOneCoach() {
+        ReservationRequest multipleSeats = new ReservationRequest("train-LDN-CAR", 2);
         context.checking(
                 new Expectations() {{
                     List<Seat> freeSeats = seats("A1", "A2");
                     allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-CAR"))); will(returnValue(freeSeats));
                     allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
-
+                    allowing(reservationPolicy).isSatisfiedBy(multipleSeats); will(returnValue(true));
                     oneOf(trainDataService).reserve(
                             with(equal("train-LDN-CAR")),
                             with(new String[]{"A1", "A2"}),
                             with(equal("a booking reference"))
                     ); will(returnValue(true));
                 }});
-
-        ReservationRequest multipleSeats = new ReservationRequest("train-LDN-CAR", 2);
 
         Reservation actual = ticketOffice.makeReservation(multipleSeats);
 
@@ -132,7 +130,6 @@ public class TicketOfficeTest {
     }
 
     @Test
-    @Ignore("Next test to get passing. Working on introducing a ReservationPolicy object")
     public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationWouldLeadToLimitBeingExceeded(){
         ReservationRequest reservationRequest = new ReservationRequest("train-LIV-NOR", 1);
 
@@ -141,7 +138,7 @@ public class TicketOfficeTest {
                     List<Seat> freeSeats = seats("A1", "A2");
                     allowing(trainDataService).availableSeatsOn(with(equal("train-LIV-NOR"))); will(returnValue(freeSeats));
                     allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
-                    allowing(reservationPolicy).policyMet(reservationRequest); will(returnValue(false));
+                    allowing(reservationPolicy).isSatisfiedBy(reservationRequest); will(returnValue(false));
                     never(trainDataService).reserve(with(equal("train-LIV-NOR")), with(any(String[].class)), with(any(String.class))); will(returnValue(true));
         }}
         );

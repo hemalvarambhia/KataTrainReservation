@@ -1,3 +1,3 @@
 public interface ReservationPolicy {
-    boolean policyMet(ReservationRequest reservationRequest);
+    boolean isSatisfiedBy(ReservationRequest reservationRequest);
 }
