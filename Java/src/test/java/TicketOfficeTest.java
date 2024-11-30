@@ -114,8 +114,9 @@ public class TicketOfficeTest {
     public void testNoSeatsCanBeReservedOnATrainWithOneCoachThatIsFull() {
         ReservationRequest request = new ReservationRequest("train-LDN-CAM", 1);
         context.checking(new Expectations(){{
+            allowing(reservationPolicy).isSatisfiedBy(request); will(returnValue(false));
             allowing(trainDataService).availableSeatsOn("train-LDN-CAM"); will(returnValue(new ArrayList<Seat>()));
-            never(referenceGenerator);
+            never(referenceGenerator).generate();
             never(trainDataService).reserve(
                     with(equal("train-LDN-CAM")),
                     with(equal(new String[]{})),
