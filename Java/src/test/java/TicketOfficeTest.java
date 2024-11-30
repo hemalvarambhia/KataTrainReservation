@@ -150,8 +150,22 @@ public class TicketOfficeTest {
     }
 
     @Test
-    @Ignore("Test list: Booking Seats In Trains With One Coach Where The Reservation Would Hit The Limit")
-    public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationWouldHitTheLimit(){}
+    public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationWouldHitTheLimit(){
+        ReservationRequest reservationRequest = new ReservationRequest("train-MAN-CAR", 1);
+
+        context.checking(new Expectations() {{
+            List<Seat> freeSeat = seats("A1");
+            allowing(trainDataService).availableSeatsOn(with(equal("train-MAN-CAR"))); will(returnValue(freeSeat));
+            never(referenceGenerator).generate();
+            allowing(reservationPolicy).isSatisfiedBy(reservationRequest); will(returnValue(false));
+            never(trainDataService).reserve(with(equal("train-MAN-CAR")), with(any(String[].class)), with(any(String.class))); will(returnValue(true));
+        }});
+
+        Reservation reservation = ticketOffice.makeReservation(reservationRequest);
+
+        assertNoReservationWasMadeOn("train-MAN-CAR", reservation);
+        context.assertIsSatisfied();
+    }
 
     private List<Seat> seats(String... seatNumbers) {
         return Seat.with(seatNumbers);
