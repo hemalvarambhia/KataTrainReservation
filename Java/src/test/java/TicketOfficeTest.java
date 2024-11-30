@@ -135,10 +135,10 @@ public class TicketOfficeTest {
 
         context.checking(
                 new Expectations() {{
+                    allowing(reservationPolicy).isSatisfiedBy(reservationRequest); will(returnValue(false));
                     List<Seat> freeSeats = seats("A1", "A2");
                     allowing(trainDataService).availableSeatsOn(with(equal("train-LIV-NOR"))); will(returnValue(freeSeats));
-                    allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
-                    allowing(reservationPolicy).isSatisfiedBy(reservationRequest); will(returnValue(false));
+                    never(referenceGenerator).generate();
                     never(trainDataService).reserve(with(equal("train-LIV-NOR")), with(any(String[].class)), with(any(String.class))); will(returnValue(true));
         }}
         );
