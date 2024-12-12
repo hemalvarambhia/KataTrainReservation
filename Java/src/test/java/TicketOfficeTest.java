@@ -68,7 +68,7 @@ public class TicketOfficeTest {
     }
 
     @Test
-    public void testOnlyNumberOfSeatsRequestedAreBooked() {
+    public void testOnlyNumberOfSeatsRequestedAreReserved() {
         ReservationRequest twoSeats = new ReservationRequest("train-LDN-LIV", 2);
         context.checking( new Expectations(){{
             allowing(reservationPolicy).isSatisfiedBy(twoSeats); will(returnValue(true));
@@ -111,7 +111,7 @@ public class TicketOfficeTest {
     }
 
     @Test
-    public void testNoSeatsCanBeReservedOnATrainWithOneCoachThatIsFull() {
+    public void testNoSeatsAreReservedOnATrainWithOneCoachThatIsFull() {
         ReservationRequest request = new ReservationRequest("train-LDN-CAM", 1);
         context.checking(new Expectations(){{
             allowing(reservationPolicy).isSatisfiedBy(request); will(returnValue(false));
@@ -131,7 +131,7 @@ public class TicketOfficeTest {
     }
 
     @Test
-    public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationWouldLeadToLimitBeingExceeded(){
+    public void testNoSeatsAreReservedOnATrainsWithOneCoachWhereTheReservationWouldLeadToLimitBeingExceeded(){
         ReservationRequest reservationRequest = new ReservationRequest("train-LIV-NOR", 1);
 
         context.checking(
@@ -151,7 +151,7 @@ public class TicketOfficeTest {
     }
 
     @Test
-    public void testBookingSeatsInTrainsWithOneCoachWhereTheReservationWouldHitTheLimit(){
+    public void testNoSeatsAreReservedOnATrainsWithOneCoachWhereTheReservationWouldHitTheLimit(){
         ReservationRequest reservationRequest = new ReservationRequest("train-MAN-CAR", 1);
 
         context.checking(new Expectations() {{
