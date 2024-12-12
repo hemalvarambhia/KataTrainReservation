@@ -47,7 +47,7 @@ public class WhenSeatsCannotBeReservedOnATrainTest {
     }
 
     @Test
-    public void testNoSeatsAreReservedOnATrainWithOneCoachThatIsFull() {
+    public void testNoSeatsAreReservedOnATrainWhenReservationViolatesReservationPolicy() {
         ReservationRequest request = new ReservationRequest("train-LDN-CAM", 1);
         context.checking(new Expectations(){{
             allowing(reservationPolicy).isSatisfiedBy(request); will(returnValue(false));
