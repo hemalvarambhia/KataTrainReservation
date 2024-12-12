@@ -51,8 +51,7 @@ public class TicketOfficeTest {
         context.checking(
                 new Expectations() {{
                     allowing(reservationPolicy).isSatisfiedBy(singleSeat); will(returnValue(true));
-                    List<Seat> freeSeats = Seat.numbers("A1");
-                    allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(freeSeats));
+                    allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(Seat.numbers("A1")));
                     allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
                     oneOf(trainDataService).reserve(
                             with(equal("train-LDN-LIV")),
@@ -95,8 +94,7 @@ public class TicketOfficeTest {
         context.checking(
                 new Expectations() {{
                     allowing(reservationPolicy).isSatisfiedBy(multipleSeats); will(returnValue(true));
-                    List<Seat> freeSeats = Seat.numbers("A1", "A2");
-                    allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-CAR"))); will(returnValue(freeSeats));
+                    allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-CAR"))); will(returnValue(Seat.numbers("A1", "A2")));
                     allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
                     oneOf(trainDataService).reserve(
                             with(equal("train-LDN-CAR")),
@@ -138,8 +136,7 @@ public class TicketOfficeTest {
         context.checking(
                 new Expectations() {{
                     allowing(reservationPolicy).isSatisfiedBy(reservationRequest); will(returnValue(false));
-                    List<Seat> freeSeats = Seat.numbers("A1", "A2");
-                    allowing(trainDataService).availableSeatsOn(with(equal("train-LIV-NOR"))); will(returnValue(freeSeats));
+                    allowing(trainDataService).availableSeatsOn(with(equal("train-LIV-NOR"))); will(returnValue(Seat.numbers("A1", "A2")));
                     never(referenceGenerator).generate();
                     never(trainDataService).reserve(with(equal("train-LIV-NOR")), with(any(String[].class)), with(any(String.class))); will(returnValue(true));
         }}
@@ -157,8 +154,7 @@ public class TicketOfficeTest {
 
         context.checking(new Expectations() {{
             allowing(reservationPolicy).isSatisfiedBy(reservationRequest); will(returnValue(false));
-            List<Seat> freeSeat = Seat.numbers("A1");
-            allowing(trainDataService).availableSeatsOn(with(equal("train-MAN-CAR"))); will(returnValue(freeSeat));
+            allowing(trainDataService).availableSeatsOn(with(equal("train-MAN-CAR"))); will(returnValue(Seat.numbers("A1")));
             never(referenceGenerator).generate();
             never(trainDataService).reserve(with(equal("train-MAN-CAR")), with(any(String[].class)), with(any(String.class))); will(returnValue(true));
         }});
