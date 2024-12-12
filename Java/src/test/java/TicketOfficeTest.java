@@ -18,34 +18,6 @@ public class TicketOfficeTest {
     }
 
     @Test
-    public void testReservingNoSeats() {
-        context.checking(new Expectations(){{
-            never(trainDataService);
-            never(referenceGenerator);
-        }});
-        ReservationRequest request = new ReservationRequest("train-LDN-OXF", 0);
-
-        Reservation actual = ticketOffice.makeReservation(request);
-
-        assertNoReservationWasMadeOn("train-LDN-OXF", actual);
-        context.assertIsSatisfied();
-    }
-
-    @Test
-    public void testReservingNoSeatsOnAnyTrain() {
-        context.checking(new Expectations(){{
-            never(trainDataService);
-            never(referenceGenerator);
-        }});
-        ReservationRequest singleSeat = new ReservationRequest("train-LDN-EDB", 0);
-
-        Reservation actual = ticketOffice.makeReservation(singleSeat);
-
-        assertNoReservationWasMadeOn("train-LDN-EDB", actual);
-        context.assertIsSatisfied();
-    }
-
-    @Test
     public void testASeatCanBeReservedOnAnEmptyTrainWithOneCoach() {
         ReservationRequest singleSeat = new ReservationRequest("train-LDN-LIV", 1);
         context.checking(
@@ -108,6 +80,35 @@ public class TicketOfficeTest {
         assertReservationMadeOn("train-LDN-CAR", new String[] {"A1", "A2"}, actual);
         context.assertIsSatisfied();
     }
+
+    @Test
+    public void testReservingNoSeats() {
+        context.checking(new Expectations(){{
+            never(trainDataService);
+            never(referenceGenerator);
+        }});
+        ReservationRequest request = new ReservationRequest("train-LDN-OXF", 0);
+
+        Reservation actual = ticketOffice.makeReservation(request);
+
+        assertNoReservationWasMadeOn("train-LDN-OXF", actual);
+        context.assertIsSatisfied();
+    }
+
+    @Test
+    public void testReservingNoSeatsOnAnyTrain() {
+        context.checking(new Expectations(){{
+            never(trainDataService);
+            never(referenceGenerator);
+        }});
+        ReservationRequest singleSeat = new ReservationRequest("train-LDN-EDB", 0);
+
+        Reservation actual = ticketOffice.makeReservation(singleSeat);
+
+        assertNoReservationWasMadeOn("train-LDN-EDB", actual);
+        context.assertIsSatisfied();
+    }
+
 
     @Test
     public void testNoSeatsAreReservedOnATrainWithOneCoachThatIsFull() {
