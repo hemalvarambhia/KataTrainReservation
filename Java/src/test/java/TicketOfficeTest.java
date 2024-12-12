@@ -37,28 +37,6 @@ public class TicketOfficeTest {
     }
 
     @Test
-    public void testOnlyNumberOfSeatsRequestedAreReserved() {
-        ReservationRequest twoSeats = new ReservationRequest("train-LDN-LIV", 2);
-        context.checking( new Expectations(){{
-            allowing(reservationPolicy).isSatisfiedBy(twoSeats); will(returnValue(true));
-            allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV")));
-                              will(returnValue(Seat.numbers("A1", "A2", "A3")));
-            allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
-            oneOf(trainDataService).reserve(
-                    with(equal("train-LDN-LIV")),
-                    with(new String[]{"A1", "A2"}),
-                    with("a booking reference")
-            ); will(returnValue(true));
-        }}
-        );
-
-        Reservation actual = ticketOffice.makeReservation(twoSeats);
-
-        assertReservationMadeOn("train-LDN-LIV", new String[] {"A1", "A2"}, actual);
-        context.assertIsSatisfied();
-    }
-
-    @Test
     public void testMoreThanOneSeatCanBeReservedWhenReservationPolicyAllows() {
         ReservationRequest multipleSeats = new ReservationRequest("train-LDN-CAR", 2);
         context.checking(
@@ -76,6 +54,28 @@ public class TicketOfficeTest {
         Reservation actual = ticketOffice.makeReservation(multipleSeats);
 
         assertReservationMadeOn("train-LDN-CAR", new String[] {"A1", "A2"}, actual);
+        context.assertIsSatisfied();
+    }
+
+    @Test
+    public void testOnlyNumberOfSeatsRequestedAreReserved() {
+        ReservationRequest twoSeats = new ReservationRequest("train-LDN-LIV", 2);
+        context.checking( new Expectations(){{
+                              allowing(reservationPolicy).isSatisfiedBy(twoSeats); will(returnValue(true));
+                              allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV")));
+                              will(returnValue(Seat.numbers("A1", "A2", "A3")));
+                              allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
+                              oneOf(trainDataService).reserve(
+                                      with(equal("train-LDN-LIV")),
+                                      with(new String[]{"A1", "A2"}),
+                                      with("a booking reference")
+                              ); will(returnValue(true));
+                          }}
+        );
+
+        Reservation actual = ticketOffice.makeReservation(twoSeats);
+
+        assertReservationMadeOn("train-LDN-LIV", new String[] {"A1", "A2"}, actual);
         context.assertIsSatisfied();
     }
 
