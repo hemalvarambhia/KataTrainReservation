@@ -6,7 +6,7 @@ public class Seat {
     public final String coach;
     public final int seatNumber;
 
-    public static List<Seat> with(String... seatNumbers) {
+    public static List<Seat> numbers(String... seatNumbers) {
         return Arrays.stream(seatNumbers)
                 .map(Seat::from)
                 .collect(Collectors.toList());
