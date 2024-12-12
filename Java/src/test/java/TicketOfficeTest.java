@@ -3,8 +3,6 @@ import org.jmock.junit5.JUnit5Mockery;
 import org.junit.*;
 import org.jmock.Mockery;
 
-import java.util.*;
-
 public class TicketOfficeTest {
     private TicketOffice ticketOffice;
     private final Mockery context = new JUnit5Mockery();
@@ -18,7 +16,7 @@ public class TicketOfficeTest {
     }
 
     @Test
-    public void testASeatCanBeReservedOnAnEmptyTrainWithOneCoach() {
+    public void testASingleSeatCanBeReservedWhenReservationAllows() {
         ReservationRequest singleSeat = new ReservationRequest("train-LDN-LIV", 1);
         context.checking(
                 new Expectations() {{
@@ -61,7 +59,7 @@ public class TicketOfficeTest {
     }
 
     @Test
-    public void testMoreThanOneSeatCanBeReservedOnAnEmptyTrainWithOneCoach() {
+    public void testMoreThanOneSeatCanBeReservedWhenReservationPolicyAllows() {
         ReservationRequest multipleSeats = new ReservationRequest("train-LDN-CAR", 2);
         context.checking(
                 new Expectations() {{
