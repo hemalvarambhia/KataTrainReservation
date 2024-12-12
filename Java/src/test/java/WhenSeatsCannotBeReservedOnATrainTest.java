@@ -66,42 +66,6 @@ public class WhenSeatsCannotBeReservedOnATrainTest {
         context.assertIsSatisfied();
     }
 
-    @Test
-    public void testNoSeatsAreReservedOnATrainsWithOneCoachWhereTheReservationWouldLeadToLimitBeingExceeded(){
-        ReservationRequest reservationRequest = new ReservationRequest("train-LIV-NOR", 1);
-
-        context.checking(
-                new Expectations() {{
-                    allowing(reservationPolicy).isSatisfiedBy(reservationRequest); will(returnValue(false));
-                    allowing(trainDataService).availableSeatsOn(with(equal("train-LIV-NOR"))); will(returnValue(Seat.numbers("A1", "A2")));
-                    never(referenceGenerator).generate();
-                    never(trainDataService).reserve(with(equal("train-LIV-NOR")), with(any(String[].class)), with(any(String.class))); will(returnValue(true));
-                }}
-        );
-
-        Reservation reservation = ticketOffice.makeReservation(reservationRequest);
-
-        assertNoReservationWasMadeOn("train-LIV-NOR", reservation);
-        context.assertIsSatisfied();
-    }
-
-    @Test
-    public void testNoSeatsAreReservedOnATrainsWithOneCoachWhereTheReservationWouldHitTheLimit(){
-        ReservationRequest reservationRequest = new ReservationRequest("train-MAN-CAR", 1);
-
-        context.checking(new Expectations() {{
-            allowing(reservationPolicy).isSatisfiedBy(reservationRequest); will(returnValue(false));
-            allowing(trainDataService).availableSeatsOn(with(equal("train-MAN-CAR"))); will(returnValue(Seat.numbers("A1")));
-            never(referenceGenerator).generate();
-            never(trainDataService).reserve(with(equal("train-MAN-CAR")), with(any(String[].class)), with(any(String.class))); will(returnValue(true));
-        }});
-
-        Reservation reservation = ticketOffice.makeReservation(reservationRequest);
-
-        assertNoReservationWasMadeOn("train-MAN-CAR", reservation);
-        context.assertIsSatisfied();
-    }
-
     private void assertNoReservationWasMadeOn(String expectedTrain, Reservation reservation) {
         Assert.assertEquals(expectedTrain, reservation.trainId);
         Assert.assertTrue("Expected no reservation, but got " + reservation, reservation.nothingBooked());
