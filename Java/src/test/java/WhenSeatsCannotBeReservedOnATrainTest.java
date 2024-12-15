@@ -52,7 +52,7 @@ public class WhenSeatsCannotBeReservedOnATrainTest {
         context.checking(new Expectations(){{
             allowing(reservationPolicy).isSatisfiedBy(request); will(returnValue(false));
             allowing(trainDataService).availableSeatsOn("train-LDN-CAM"); will(returnValue(new ArrayList<Seat>()));
-            allowing(trainDataService).coaches("train-LDN-CAM"); will(returnValue(new Coach(new ArrayList<Seat>())));
+            allowing(trainDataService).firstCoach("train-LDN-CAM"); will(returnValue(new Coach(new ArrayList<Seat>())));
             never(referenceGenerator).generate();
             never(trainDataService).reserve(
                     with(equal("train-LDN-CAM")),
