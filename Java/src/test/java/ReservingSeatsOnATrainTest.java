@@ -85,8 +85,8 @@ public class ReservingSeatsOnATrainTest {
         context.assertIsSatisfied();
     }
 
-    private List<Seat> aCoachWith(List<Seat> seats) {
-        return new Coach(seats).getSeats();
+    private Coach aCoachWith(List<Seat> seats) {
+        return new Coach(seats);
     }
 
     private void assertReservationMadeOn(String train, String[] seats, Reservation actual) {
