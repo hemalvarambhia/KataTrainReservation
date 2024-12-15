@@ -2,8 +2,6 @@ import org.jmock.Expectations;
 import org.jmock.junit5.JUnit5Mockery;
 import org.junit.*;
 import org.jmock.Mockery;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReservingSeatsOnATrainTest {
