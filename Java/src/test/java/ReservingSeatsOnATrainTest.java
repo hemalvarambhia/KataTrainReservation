@@ -3,6 +3,9 @@ import org.jmock.junit5.JUnit5Mockery;
 import org.junit.*;
 import org.jmock.Mockery;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ReservingSeatsOnATrainTest {
     private TicketOffice ticketOffice;
     private final Mockery context = new JUnit5Mockery();
@@ -77,6 +80,10 @@ public class ReservingSeatsOnATrainTest {
 
         assertReservationMadeOn("train-LDN-LIV", new String[] {"A1", "A2"}, actual);
         context.assertIsSatisfied();
+    }
+
+    private List<Seat> aCoachWith(List<Seat> seats) {
+        return new Coach(seats).getSeats();
     }
 
     private void assertReservationMadeOn(String train, String[] seats, Reservation actual) {
