@@ -18,11 +18,11 @@ public class TicketOffice {
         String train = request.trainId;
 
         if(request.noSeatsRequested()) { return Reservation.none(train); }
+        if(!reservationPolicy.isSatisfiedBy(request)) { return Reservation.none(train); }
 
         Coach coach = trainDataService.firstCoach(train);
         if(coach.fullyBooked()) { return Reservation.none(train); }
 
-        if(!reservationPolicy.isSatisfiedBy(request)) { return Reservation.none(train); }
         List<Seat> seatsToBook = coach.firstAvailableSeats(request.numberOfSeatsToBook());
         return reserveSeatsOn(train, seatsToBook);
     }
