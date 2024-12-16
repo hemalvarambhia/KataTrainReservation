@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TicketOffice {
 
@@ -24,7 +23,7 @@ public class TicketOffice {
         if(coach.fullyBooked()) { return Reservation.none(train); }
 
         if(!reservationPolicy.isSatisfiedBy(request)) { return Reservation.none(train); }
-        List<Seat> seatsToBook = coach.getSeats(request.numberOfSeatsToBook());
+        List<Seat> seatsToBook = coach.firstAvailableSeats(request.numberOfSeatsToBook());
         String bookingReference = reserveSeatsOn(train, seatsToBook);
         return new Reservation(train, seatsToBook, bookingReference);
     }
