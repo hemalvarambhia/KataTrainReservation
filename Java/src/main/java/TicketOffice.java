@@ -24,14 +24,13 @@ public class TicketOffice {
 
         if(!reservationPolicy.isSatisfiedBy(request)) { return Reservation.none(train); }
         List<Seat> seatsToBook = coach.firstAvailableSeats(request.numberOfSeatsToBook());
-        String bookingReference = reserveSeatsOn(train, seatsToBook);
-        return new Reservation(train, seatsToBook, bookingReference);
+        return reserveSeatsOn(train, seatsToBook);
     }
 
-    private String reserveSeatsOn(String train, List<Seat> seatsToReserve) {
+    private Reservation reserveSeatsOn(String train, List<Seat> seatsToReserve) {
         String bookingReference = bookingReferenceGenerator.generate();
         String[] seatNumbers = seatsToReserve.stream().map(Seat::number).toArray(String[]::new);
         trainDataService.reserve(train, seatNumbers, bookingReference);
-        return bookingReference;
+        return new Reservation(train, seatsToReserve, bookingReference);
     }
 }
