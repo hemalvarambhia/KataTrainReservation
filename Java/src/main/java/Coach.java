@@ -9,10 +9,6 @@ public class Coach {
         this.seats = seats;
     }
 
-    public List<Seat> getSeats() {
-        return new ArrayList<>(seats);
-    }
-
     public boolean fullyBooked() {
         return seats.isEmpty();
     }

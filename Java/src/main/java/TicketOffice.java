@@ -29,10 +29,6 @@ public class TicketOffice {
         return new Reservation(train, seatsToBook, bookingReference);
     }
 
-    private List<Seat> limit(List<Seat> availableSeats, int numberOfSeats) {
-        return availableSeats.stream().limit(numberOfSeats).collect(Collectors.toList());
-    }
-
     private String reserveSeatsOn(String train, List<Seat> seatsToReserve) {
         String bookingReference = bookingReferenceGenerator.generate();
         String[] seatNumbers = seatsToReserve.stream().map(Seat::number).toArray(String[]::new);
