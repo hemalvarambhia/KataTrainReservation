@@ -11,4 +11,8 @@ public class Coach {
     public List<Seat> getSeats() {
         return new ArrayList<>(seats);
     }
+
+    public boolean fullyBooked() {
+        return seats.isEmpty();
+    }
 }

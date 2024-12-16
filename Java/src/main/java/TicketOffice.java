@@ -20,8 +20,9 @@ public class TicketOffice {
 
         if(request.noSeatsRequested()) { return Reservation.none(train); }
 
-        List<Seat> availableSeats = trainDataService.availableSeatsOn(train);
-        if(availableSeats.isEmpty()) { return Reservation.none(train); }
+        Coach coach = trainDataService.firstCoach(train);
+        List<Seat> availableSeats = coach.getSeats();
+        if(coach.fullyBooked()) { return Reservation.none(train); }
 
         if(!reservationPolicy.isSatisfiedBy(request)) { return Reservation.none(train); }
         List<Seat> seatsToBook = limit(availableSeats, request.numberOfSeatsToBook());
