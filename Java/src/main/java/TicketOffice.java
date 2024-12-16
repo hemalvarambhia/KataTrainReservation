@@ -10,8 +10,8 @@ public class TicketOffice {
             TrainDataService trainDataService,
             BookingReferenceGenerator bookingReferenceGenerator, ReservationPolicy policy) {
         this.trainDataService = trainDataService;
-        this.reservationPolicy = policy;
         this.bookingReferenceGenerator = bookingReferenceGenerator;
+        this.reservationPolicy = policy;
     }
     
     public Reservation makeReservation(ReservationRequest request) {
