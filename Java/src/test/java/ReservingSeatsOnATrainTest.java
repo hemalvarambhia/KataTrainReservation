@@ -79,6 +79,13 @@ public class ReservingSeatsOnATrainTest {
         context.assertIsSatisfied();
     }
 
+    @Ignore("Test list: booking seats on the first coach that satisfies the reservation policy")
+    @Test
+    public void testTicketOfficeBooksSeatsOnFirstCoachThatSatisfiesReservationPolicy() {
+        context.assertIsSatisfied();
+    }
+
+
     private Coach aCoachWith(List<Seat> seats) {
         return new Coach(seats);
     }
