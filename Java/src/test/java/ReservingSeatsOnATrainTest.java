@@ -22,7 +22,6 @@ public class ReservingSeatsOnATrainTest {
         context.checking(
                 new Expectations() {{
                     allowing(reservationPolicy).isSatisfiedBy(singleSeat); will(returnValue(true));
-                    allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(Seat.numbers("A1")));
                     allowing(trainDataService).firstCoach(with(equal("train-LDN-LIV"))); will(returnValue(aCoachWith(Seat.numbers("A1"))));
                     allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
                     oneOf(trainDataService).reserve(
@@ -44,7 +43,6 @@ public class ReservingSeatsOnATrainTest {
         context.checking(
                 new Expectations() {{
                     allowing(reservationPolicy).isSatisfiedBy(multipleSeats); will(returnValue(true));
-                    allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-CAR"))); will(returnValue(Seat.numbers("A1", "A2")));
                     allowing(trainDataService).firstCoach(with(equal("train-LDN-CAR"))); will(returnValue(aCoachWith(Seat.numbers("A1", "A2"))));
                     allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
                     oneOf(trainDataService).reserve(
@@ -65,9 +63,7 @@ public class ReservingSeatsOnATrainTest {
         ReservationRequest twoSeats = new ReservationRequest("train-LDN-LIV", 2);
         context.checking( new Expectations(){{
                               allowing(reservationPolicy).isSatisfiedBy(twoSeats); will(returnValue(true));
-                              allowing(trainDataService).availableSeatsOn(with(equal("train-LDN-LIV"))); will(returnValue(Seat.numbers("A1", "A2", "A3")));
                               allowing(trainDataService).firstCoach(with(equal("train-LDN-LIV"))); will(returnValue(aCoachWith(Seat.numbers("A1", "A2", "A3"))));
-
                               allowing(referenceGenerator).generate(); will(returnValue("a booking reference"));
                               oneOf(trainDataService).reserve(
                                       with(equal("train-LDN-LIV")),
